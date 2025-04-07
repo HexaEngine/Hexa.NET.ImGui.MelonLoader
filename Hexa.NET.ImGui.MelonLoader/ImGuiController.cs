@@ -1,6 +1,8 @@
 ﻿namespace Hexa.NET.ImGui.MelonLoader
 {
+    using Hexa.NET.D3D11;
     using HexaGen.Runtime;
+    using HexaGen.Runtime.COM;
     using Il2CppFluffyUnderware.DevTools.Extensions;
     using Il2CppInterop.Runtime.InteropTypes.Arrays;
     using System;
@@ -12,6 +14,8 @@
     public class ImGuiController
     {
         private ImGuiContextPtr context;
+        private readonly UniverseLib.AssetBundle bundle;
+        private readonly Shader shader;
         private readonly Material material;
         private Texture2D fontTexture;
 
@@ -54,8 +58,8 @@
             platformIO.PlatformSetImeDataFn = (void*)Marshal.GetFunctionPointerForDelegate<PlatformSetImeDataFn>(SetImeData);
             platformIO.PlatformOpenInShellFn = (void*)Marshal.GetFunctionPointerForDelegate<PlatformOpenInShellFn>(OpenInShell);
 
-            var bundle = UniverseLib.AssetBundle.LoadFromFile("Mods/ImGui.bundle");
-            var shader = bundle.LoadAsset<Shader>("Assets/ImGuiOverlayShader.shader");
+            bundle = UniverseLib.AssetBundle.LoadFromFile("Mods/ImGui.bundle");
+            shader = bundle.LoadAsset<Shader>("Assets/ImGuiOverlayShader.shader");
             material = new Material(shader);
             mesh.MarkDynamic();
         }
@@ -376,9 +380,10 @@
             return currentId;
         }
 
-        public unsafe void Render()
+        public unsafe void EndFrame()
         {
             ImGui.Render();
+            ImGui.EndFrame();
             Render(ImGui.GetDrawData());
         }
 
@@ -494,6 +499,9 @@
             InvalidateFontTexture();
             mesh.Destroy();
             buffer.Dispose();
+            material.Destroy();
+            shader.Destroy();
+            bundle.Destroy();
         }
     }
 }

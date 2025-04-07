@@ -467,7 +467,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="Hexa.NET.D3D11" Version="1.0.6" />
 	  <PackageReference Include="Hexa.NET.ImGui" Version="2.2.7" />
+	  <PackageReference Include="Hexa.NET.ImGui.Widgets" Version="1.2.13" />
 	  <PackageReference Include="UniverseLib.IL2CPP.Interop" Version="1.5.1" />
 	</ItemGroup>
 

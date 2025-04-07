@@ -1,5 +1,8 @@
 ﻿using Hexa.NET.ImGui.Utilities;
+using Hexa.NET.ImGui.Widgets;
+using Hexa.NET.ImGui.Widgets.Dialogs;
 using MelonLoader;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 [assembly: MelonInfo(typeof(Hexa.NET.ImGui.MelonLoader.Core), "Hexa.NET.ImGui.MelonLoader", "1.0.0", "Juna", null)]
@@ -20,14 +23,32 @@ namespace Hexa.NET.ImGui.MelonLoader
                 ImGuiFontBuilder builder = new();
                 builder
                     .AddFontFromFileTTF("Mods/arialuni.ttf", 16, [0x1, 0x1FFFF])
+                    .SetOption(config =>
+                    {
+                        config.GlyphMinAdvanceX = 18;
+                        config.GlyphOffset = new(0, 4);
+                        config.MergeMode = true;
+                    })
+                    .AddFontFromFileTTF("Mods/MaterialSymbolsRounded.ttf", 16.0f, [0xe003, 0xF8FF])
                     .Build();
             });
+
+            WidgetManager.Init();
+            WidgetManager.FirstWindowIsMainWindow = false;
+            MainWindow window = new();
+            window.Show();
+        }
+
+        public override void OnDeinitializeMelon()
+        {
+            WidgetManager.Dispose();
+            controller.Dispose();
         }
 
         public override void OnUpdate()
         {
             controller.UpdateInput();
-            if (Input.GetKeyDown(KeyCode.Home))
+            if (Input.GetKeyDown(KeyCode.End))
             {
                 show = !show;
             }
@@ -39,10 +60,24 @@ namespace Hexa.NET.ImGui.MelonLoader
 
             if (show)
             {
-                ImGui.ShowDemoWindow();
+                WidgetManager.Draw();
             }
 
-            controller.Render();
+            controller.EndFrame();
+        }
+    }
+
+    public class MainWindow : ImWindow
+    {
+        public override string Name { get; } = "MainWindow";
+
+        public override void DrawContent()
+        {
+            if (ImGui.Button("Open file dialog"))
+            {
+                OpenFileDialog dialog = new();
+                dialog.Show();
+            }
         }
     }
 }
