@@ -1,0 +1,20 @@
+ManifestFileVersion: 0
+CRC: 2317297899
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 7d8c3b763b635f8afe469227ff21aa82
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 0df1dec30b5d061d422d3e6493d27647
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 7d8c3b763b635f8afe469227ff21aa82
+HashAppended: 0
+ClassTypes:
+- Class: 48
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/ImGuiOverlayShader.shader
+Dependencies: []

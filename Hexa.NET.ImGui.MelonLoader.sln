@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35919.96 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexa.NET.ImGui.MelonLoader", "Hexa.NET.ImGui.MelonLoader\Hexa.NET.ImGui.MelonLoader.csproj", "{29E522A7-B9EC-44DB-BAA2-4330871D8E90}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{29E522A7-B9EC-44DB-BAA2-4330871D8E90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29E522A7-B9EC-44DB-BAA2-4330871D8E90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29E522A7-B9EC-44DB-BAA2-4330871D8E90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29E522A7-B9EC-44DB-BAA2-4330871D8E90}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {98C90F0B-D585-4DE6-933C-CFA53787CBF9}
+	EndGlobalSection
+EndGlobal
