@@ -14,19 +14,20 @@
     public class ImGuiController
     {
         private ImGuiContextPtr context;
-        private readonly UniverseLib.AssetBundle bundle;
-        private readonly Shader shader;
-        private readonly Material material;
+        private UniverseLib.AssetBundle bundle = UniverseLib.AssetBundle.LoadFromFile("Mods/ImGui.bundle");
+        private Shader shader;
+        private Material material;
         private Texture2D fontTexture;
 
+        private long time;
         private Vector2 oldMousePos;
         private Vector2 oldMouseScroll;
         private bool isFocused;
         private static readonly bool[] keyStates = new bool[(int)ImGuiKey.NamedKeyCount];
         private readonly bool[] buttonStates = new bool[5];
 
-        private readonly CommandBuffer buffer = new();
-        private readonly Mesh mesh = new();
+        private CommandBuffer buffer = new();
+        private Mesh mesh = new();
 
         private Il2CppStructArray<Vector3> verts;
         private Il2CppStructArray<Vector2> uvs;
@@ -58,9 +59,27 @@
             platformIO.PlatformSetImeDataFn = (void*)Marshal.GetFunctionPointerForDelegate<PlatformSetImeDataFn>(SetImeData);
             platformIO.PlatformOpenInShellFn = (void*)Marshal.GetFunctionPointerForDelegate<PlatformOpenInShellFn>(OpenInShell);
 
-            bundle = UniverseLib.AssetBundle.LoadFromFile("Mods/ImGui.bundle");
             shader = bundle.LoadAsset<Shader>("Assets/ImGuiOverlayShader.shader");
             material = new Material(shader);
+            mesh.MarkDynamic();
+        }
+
+        public void Reinitialize()
+        {
+            if (buffer.Pointer != IntPtr.Zero)
+                buffer?.Dispose();
+            buffer = null;
+            if (mesh.Pointer != IntPtr.Zero)
+                mesh?.Destroy();
+            mesh = null;
+            if (material.Pointer != IntPtr.Zero)
+                material?.Destroy();
+            material = null;
+
+            buffer = new();
+            shader = bundle.LoadAsset<Shader>("Assets/ImGuiOverlayShader.shader");
+            material = new Material(shader);
+            mesh = new();
             mesh.MarkDynamic();
         }
 
@@ -91,7 +110,7 @@
             return 1;
         }
 
-        private unsafe void SetImeData(ImGuiContext* ctx, ImGuiViewport* viewport, ImGuiPlatformImeData* data)
+        private static unsafe void SetImeData(ImGuiContext* ctx, ImGuiViewport* viewport, ImGuiPlatformImeData* data)
         {
             bool wantIME = data->WantVisible == 1;
             GUIUtility.imeCompositionMode = wantIME ? IMECompositionMode.On : IMECompositionMode.Auto;
@@ -102,12 +121,12 @@
             return !ImGui.GetCurrentContext().IsNull ? (BackendData*)ImGui.GetIO().BackendPlatformUserData : null;
         }
 
-        private unsafe void SetClipboardText(ImGuiContext* ctx, byte* text)
+        private static unsafe void SetClipboardText(ImGuiContext* ctx, byte* text)
         {
             GUIUtility.systemCopyBuffer = Utils.DecodeStringUTF8(text);
         }
 
-        private unsafe byte* GetClipboardText(ImGuiContext* ctx)
+        private static unsafe byte* GetClipboardText(ImGuiContext* ctx)
         {
             BackendData* bd = GetBackendData();
             if (bd->ClipboardTextData != null)
@@ -124,6 +143,23 @@
             {
                 CreateFontTexture();
             }
+
+            long now = Stopwatch.GetTimestamp();
+            float delta;
+            if (time == 0)
+            {
+                delta = 0.0001f;
+            }
+            else
+            {
+                delta = (now - time) / (float)Stopwatch.Frequency;
+            }
+            time = now;
+
+            var io = ImGui.GetIO();
+            io.DisplaySize = new(Screen.width, Screen.height);
+            io.DeltaTime = delta;
+
             textureId = 1;
             idToTexture.Clear();
             ImGui.SetCurrentContext(context);
@@ -155,9 +191,6 @@
         public void UpdateInput()
         {
             var io = ImGui.GetIO();
-            io.DisplaySize = new(Screen.width, Screen.height);
-            io.DeltaTime = Time.deltaTime;
-
             Vector2 mousePos = Input.mousePosition;
 
             if (mousePos != oldMousePos)
@@ -497,11 +530,16 @@
         public void Dispose()
         {
             InvalidateFontTexture();
-            mesh.Destroy();
-            buffer.Dispose();
-            material.Destroy();
-            shader.Destroy();
-            bundle.Destroy();
+            buffer?.Dispose();
+            buffer = null;
+            mesh?.Destroy();
+            mesh = null;
+            material?.Destroy();
+            material = null;
+            shader?.Destroy();
+            shader = null;
+            bundle?.Destroy();
+            bundle = null;
         }
     }
 }

@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35919.96 d17.13
+VisualStudioVersion = 17.13.35919.96
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexa.NET.ImGui.MelonLoader", "Hexa.NET.ImGui.MelonLoader\Hexa.NET.ImGui.MelonLoader.csproj", "{29E522A7-B9EC-44DB-BAA2-4330871D8E90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "TestApp\TestApp.csproj", "{B7FD7163-8E1D-449A-8288-1480B6C3C19D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "S1Utils", "S1Utils\S1Utils.csproj", "{FC029EA4-C629-DFC2-6F22-A3D29499BF27}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{29E522A7-B9EC-44DB-BAA2-4330871D8E90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29E522A7-B9EC-44DB-BAA2-4330871D8E90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29E522A7-B9EC-44DB-BAA2-4330871D8E90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7FD7163-8E1D-449A-8288-1480B6C3C19D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7FD7163-8E1D-449A-8288-1480B6C3C19D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7FD7163-8E1D-449A-8288-1480B6C3C19D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7FD7163-8E1D-449A-8288-1480B6C3C19D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC029EA4-C629-DFC2-6F22-A3D29499BF27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC029EA4-C629-DFC2-6F22-A3D29499BF27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC029EA4-C629-DFC2-6F22-A3D29499BF27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC029EA4-C629-DFC2-6F22-A3D29499BF27}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

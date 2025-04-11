@@ -464,6 +464,8 @@
 	<ItemGroup>
 		<Compile Include="Core.cs" />
 		<Compile Include="ImGuiController.cs" />
+		<Compile Include="Plugin.cs" />
+		<Compile Include="PluginWindow.cs" />
 	</ItemGroup>
 
 	<ItemGroup>

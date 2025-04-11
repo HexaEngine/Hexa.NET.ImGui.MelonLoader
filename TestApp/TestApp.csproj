@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hexa.NET.GLFW" Version="1.0.4" />
+    <PackageReference Include="Hexa.NET.ImGui.Backends" Version="1.0.15" />
+    <PackageReference Include="Hexa.NET.ImGui.Backends.GLFW" Version="1.0.15" />
+    <PackageReference Include="Hexa.NET.OpenGL3" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Hexa.NET.ImGui.MelonLoader\Hexa.NET.ImGui.MelonLoader.csproj" />
+    <ProjectReference Include="..\S1Utils\S1Utils.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="fonts\arialuni.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="fonts\MaterialSymbolsRounded.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
