@@ -476,7 +476,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Update="Resources\arialuni.ttf">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Resources\imguimelon">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Resources\MaterialSymbolsRounded.ttf">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>
