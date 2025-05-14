@@ -1,72 +1,9 @@
-﻿namespace Hexa.NET.ImGui.MelonLoader
+﻿namespace Hexa.NET.ImGui.MelonLoader.Plugins
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
     using System.Runtime.Loader;
-
-    public abstract class Plugin
-    {
-        public abstract string Name { get; }
-
-        public virtual void OnInitialized()
-        {
-        }
-
-        public virtual void OnUnload()
-        {
-        }
-
-        /// <summary>
-        /// Runs when a new Scene is loaded.
-        /// </summary>
-        public virtual void OnSceneWasLoaded(int buildIndex, string sceneName)
-        {
-        }
-
-        /// <summary>
-        /// Runs once a Scene is initialized.
-        /// </summary>
-        public virtual void OnSceneWasInitialized(int buildIndex, string sceneName)
-        {
-        }
-
-        /// <summary>
-        /// Runs once a Scene unloads.
-        /// </summary>
-        public virtual void OnSceneWasUnloaded(int buildIndex, string sceneName)
-        {
-        }
-
-        /// <summary>
-        /// Runs once per frame.
-        /// </summary>
-        public virtual void OnUpdate()
-        {
-        }
-
-        /// <summary>
-        /// Can run multiple times per frame. Mostly used for Physics.
-        /// </summary>
-        public virtual void OnFixedUpdate()
-        {
-        }
-
-        /// <summary>
-        /// Runs once per frame, after <see cref="OnUpdate"/>.
-        /// </summary>
-        public virtual void OnLateUpdate()
-        {
-        }
-
-        /// <summary>
-        /// Can run multiple times per frame. Mostly used for Unity's IMGUI.
-        /// </summary>
-        public virtual void OnGUI()
-        {
-        }
-    }
 
     public class PluginInstance
     {
@@ -93,7 +30,7 @@
 
         public bool Failed { get; private set; }
 
-        public Exception? FailedException { get; private set; }
+        public Exception FailedException { get; private set; }
 
         public bool Load()
         {
@@ -217,80 +154,6 @@
                 assemblyLoadContext.Unload();
                 assemblyLoadContext = null;
             }
-        }
-    }
-
-    public class PluginManager
-    {
-        private List<PluginInstance> plugins = [];
-
-        public PluginManager()
-        {
-        }
-
-        public IReadOnlyList<PluginInstance> Plugins => plugins;
-
-        public void LoadFromFolder(string path)
-        {
-            if (!Directory.Exists(path)) return;
-            foreach (var file in Directory.EnumerateFiles(path, "*.dll"))
-            {
-                Load(file);
-            }
-        }
-
-        public void ReloadAll()
-        {
-            foreach (var plugin in plugins)
-            {
-                plugin.Reload();
-            }
-        }
-
-        public void Load(string path)
-        {
-            PluginInstance instance = new(path);
-            instance.Load();
-            plugins.Add(instance);
-        }
-
-        public void DoAll(Action<Plugin> action)
-        {
-            foreach (var plugin in plugins)
-            {
-                try
-                {
-                    plugin.Do(action);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                }
-            }
-        }
-
-        public void DoAll<T>(T payload, Action<T, Plugin> action)
-        {
-            foreach (var plugin in plugins)
-            {
-                try
-                {
-                    plugin.Do(payload, action);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                }
-            }
-        }
-
-        public void Unload()
-        {
-            foreach (var plugin in plugins)
-            {
-                plugin.Unload();
-            }
-            plugins.Clear();
         }
     }
 }

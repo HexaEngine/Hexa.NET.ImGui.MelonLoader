@@ -464,12 +464,21 @@
 	<ItemGroup>
 		<Compile Include="Core.cs" />
 		<Compile Include="ImGuiController.cs" />
-		<Compile Include="Plugin.cs" />
-		<Compile Include="PluginWindow.cs" />
+		<Compile Include="HarmonyPatches.cs" />
+		<Compile Include="Plugins\Plugin.cs" />
+		<Compile Include="Plugins\PluginInstance.cs" />
+		<Compile Include="Plugins\PluginManager.cs" />
+		<Compile Include="Plugins\PluginWindow.cs" />
+		<Compile Include="StyleEditorWindow.cs" />
+		<Compile Include="UI\Titlebar.cs" />
+		<Compile Include="UI\TitlebarItem.cs" />
+		<Compile Include="UI\TitlebarItemCollection.cs" />
+		<Compile Include="UI\TitlebarMenu.cs" />
+		<Compile Include="UI\TitlebarMenuBuilder.cs" />
+		<Compile Include="UI\TitlebarMenuItem.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Hexa.NET.D3D11" Version="1.0.6" />
 	  <PackageReference Include="Hexa.NET.ImGui" Version="2.2.7" />
 	  <PackageReference Include="Hexa.NET.ImGui.Widgets" Version="1.2.13" />
 	  <PackageReference Include="UniverseLib.IL2CPP.Interop" Version="1.5.1" />

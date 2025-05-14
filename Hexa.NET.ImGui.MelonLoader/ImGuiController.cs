@@ -1,9 +1,8 @@
 ﻿namespace Hexa.NET.ImGui.MelonLoader
 {
-    using Hexa.NET.D3D11;
     using HexaGen.Runtime;
-    using HexaGen.Runtime.COM;
     using Il2CppFluffyUnderware.DevTools.Extensions;
+    using Il2CppInterop.Runtime;
     using Il2CppInterop.Runtime.InteropTypes.Arrays;
     using System;
     using System.Diagnostics;
@@ -188,7 +187,11 @@
             fontTexture.Apply();
         }
 
-        public void UpdateInput()
+        private delegate nint get_inputStringDelegate();
+
+        private static readonly get_inputStringDelegate get_inputString = IL2CPP.ResolveICall<get_inputStringDelegate>("UnityEngine.Input::get_inputString");
+
+        public unsafe void UpdateInput()
         {
             var io = ImGui.GetIO();
             Vector2 mousePos = Input.mousePosition;
@@ -231,10 +234,13 @@
                 io.AddKeyEvent(keymod, state);
             }
 
-            var text = Input.inputString;
-            for (int i = 0; i < text.Length; i++)
+            // custom getter for preventing gc pressure and direct translation.
+            nint inputString = get_inputString();
+            var length = IL2CPP.il2cpp_string_length(inputString);
+            var chars = IL2CPP.il2cpp_string_chars(inputString);
+            for (int i = 0; i < length; i++)
             {
-                io.AddInputCharacterUTF16(text[i]);
+                io.AddInputCharacterUTF16(chars[i]);
             }
         }
 
@@ -527,8 +533,21 @@
             Graphics.ExecuteCommandBuffer(buffer);
         }
 
-        public void Dispose()
+        public unsafe void Dispose()
         {
+            var bd = GetBackendData();
+            if (bd != null)
+            {
+                if (bd->ClipboardTextData != null)
+                {
+                    Utils.Free(bd->ClipboardTextData);
+                    bd->ClipboardTextData = null;
+                }
+                var io = ImGui.GetIO();
+                io.BackendPlatformUserData = null;
+                Utils.Free(bd);
+            }
+
             InvalidateFontTexture();
             buffer?.Dispose();
             buffer = null;

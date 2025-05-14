@@ -20,13 +20,13 @@
             byte* buffer = stackalloc byte[1024];
             StrBuilder builder = new(buffer, 1024);
 
-            var avail = ImGui.GetContentRegionAvail();
-
-            if (ImGui.Button("+"))
+            if (ImGui.SmallButton("+"u8))
             {
                 CreateTaskPopup popup = new(tasks);
                 popup.Show();
             }
+
+            var avail = ImGui.GetContentRegionAvail();
 
             ImGui.BeginChild("##Panel1"u8, new Vector2(split, avail.Y));
 

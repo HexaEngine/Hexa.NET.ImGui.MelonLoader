@@ -1,4 +1,5 @@
-﻿using Hexa.NET.ImGui.Widgets;
+﻿using Hexa.NET.ImGui.MelonLoader.Plugins;
+using Hexa.NET.ImGui.Widgets;
 using Hexa.NET.Utilities.Text;
 
 namespace Hexa.NET.ImGui.MelonLoader
